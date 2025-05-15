@@ -26,12 +26,14 @@ function App() {
             onClick={async () => {
               setLoading(true);
               try {
-                const response = await fetch("http://localhost:5000/api/process", {
+                console.log("Transcript being sent:", transcript);
+                const response = await fetch("http://localhost:3000/analyze/", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ transcript }),
+                  body: JSON.stringify({ transcriptText: transcript }),
                 });
                 const data = await response.json();
+                console.log(data);
                 setSummary(data.summary);
                 setTasks(data.tasks);
                 setEli5(data.eli5);
@@ -49,8 +51,10 @@ function App() {
 
         <div className="mt-8 space-y-6">
           {summary && <SummaryOutput summary={summary} />}
-          {tasks.length > 0 && <ActionItems tasks={tasks} />}
-          {eli5.length > 0 && <ELI5Output eli5={eli5} />}
+          {Array.isArray(tasks) && tasks.length > 0 && (
+            <ActionItems tasks={tasks} />
+          )}
+          {Array.isArray(eli5) && eli5.length > 0 && <ELI5Output eli5={eli5} />}
         </div>
       </div>
     </div>

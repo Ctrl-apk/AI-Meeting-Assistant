@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { text } from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
@@ -8,7 +8,22 @@ const router = express.Router();
 const SONAR_API_KEY = process.env.SONAR_API_KEY;
 
 const prompts = {
-  summary: "Summarize this meeting transcript briefly.",
+  summary: `You are a professional AI meeting assistant.
+
+Please analyze the following meeting transcript and provide your output in a clean, structured format with clearly labeled sections,  new lines and if possible emojis as well:
+
+
+1. Meeting Summary:
+Summarize the key discussion points and decisions made in a clear and concise way. Use short bullet points grouped by topic (e.g., Product Update, QA, Marketing, etc.). Do not include filler or greetings.
+
+2. Action Items:
+List all specific tasks discussed during the meeting. For each task, include:
+- Task Description
+- Assigned To
+- Deadline (if mentioned)
+
+Transcript: ${transcript}
+`,
   actionItems: "Extract action items from this meeting transcript.",
   eli5: "Explain this meeting content like I’m five."
 };

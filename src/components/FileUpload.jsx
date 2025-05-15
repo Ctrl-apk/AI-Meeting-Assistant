@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function FileUpload({ setTranscript }) {
   const [text, setText] = useState("");
 
+  useEffect(() => {
+    setTranscript(text);
+  }, [text, setTranscript]);
+  
   const handleFile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
