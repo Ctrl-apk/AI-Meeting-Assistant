@@ -1,4 +1,3 @@
-// transcriptRoutes.js
 import express from 'express';
 import { analyzeTranscript } from '../controllers/transcriptController.js';
 
