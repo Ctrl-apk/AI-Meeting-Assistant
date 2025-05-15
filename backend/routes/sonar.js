@@ -8,7 +8,7 @@ const router = express.Router();
 const SONAR_API_KEY = process.env.SONAR_API_KEY;
 
 const prompts = {
-  summary: `You are a professional AI meeting assistant.
+  summary: (transcript)=>`You are a professional AI meeting assistant.
 
 Please analyze the following meeting transcript and provide your output in a clean, structured format with clearly labeled sections,  new lines and if possible emojis as well:
 
@@ -58,7 +58,7 @@ async function callSonar(prompt, input) {
 // 🔥 Named Export — so it can be used in other files like transcriptController.js
 export async function analyzeWithAI(transcript) {
   const [summary, actionItems, eli5] = await Promise.all([
-    callSonar(prompts.summary, transcript),
+    callSonar(prompts.summary(transcript), transcript),
     callSonar(prompts.actionItems, transcript),
     callSonar(prompts.eli5, transcript)
   ]);
